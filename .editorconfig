@@ -1,20 +1,18 @@
-# editorconfig.org
+# https://EditorConfig.org
+
 root = true
 
 [*]
-indent_style = space
-indent_size = 2
-end_of_line = lf
-charset = utf-8
+end_of_line              = lf
+insert_final_newline     = true
 trim_trailing_whitespace = true
-insert_final_newline = true
+charset                  = utf-8
+indent_style             = tab
 
-[*.md]
-trim_trailing_whitespace = false
-
-[*.php]
-indent_style = tab
-indent_size = 4
-
-[*.{xml,xml.dist}]
-indent_size = 4
+[/vendor/**]
+charset                  = unset
+end_of_line              = unset
+insert_final_newline     = unset
+trim_trailing_whitespace = unset
+indent_style             = unset
+indent_size              = unset
