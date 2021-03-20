@@ -1504,8 +1504,21 @@ class Model
 	 * SomeModel::exists(array('id' => 123, 'name' => 'Tito'));
 	 * </code>
 	 *
-	 * @see find
+	 * @param array $options = [
+	 *                        'select' => string,
+	 *                        'conditions' => [],
+	 *                        'joins' => [],
+	 *                        'order' => string,
+	 *                        'limit' => int,
+	 *                        'offset' => int,
+	 *                        'group' => string,
+	 *                        'having' => string,
+	 *                        'readonly' => string,
+	 *                        'include' => [],
+	 *                        ]
+	 *
 	 * @return boolean
+	 *@see find
 	 */
 	public static function exists(/* ... */)
 	{
@@ -1539,7 +1552,7 @@ class Model
 	/**
 	 * Alias for self::find('last')
 	 *
-	 * @param array $options  = [
+	 * @param array $options = [
 	 *                        'select' => string,
 	 *                        'conditions' => [],
 	 *                        'joins' => [],
