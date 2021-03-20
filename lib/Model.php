@@ -63,6 +63,8 @@ namespace ActiveRecord;
  * For a more in-depth look at defining models, relationships, callbacks and many other things
  * please consult our {@link http://www.phpactiverecord.org/guides Guides}.
  *
+ * @method static $this find_by_id(int $id)
+ *
  * @package ActiveRecord
  * @see BelongsTo
  * @see CallBack
@@ -771,7 +773,8 @@ class Model
 	 * @param array $attributes Array of the models attributes
 	 * @param boolean $validate True if the validators should be run
 	 * @param boolean $guard_attributes Set to true to guard protected/non-accessible attributes
-	 * @return Model
+	 *
+	 * @return $this
 	 */
 	public static function create($attributes, $validate=true, $guard_attributes=true)
 	{
@@ -1428,8 +1431,21 @@ class Model
 	/**
 	 * Alias for self::find('all').
 	 *
+	 * @param array $options = [
+	 *                        'select' => string,
+	 *                        'conditions' => [],
+	 *                        'joins' => [],
+	 *                        'order' => string,
+	 *                        'limit' => int,
+	 *                        'offset' => int,
+	 *                        'group' => string,
+	 *                        'having' => string,
+	 *                        'readonly' => string,
+	 *                        'include' => [],
+	 *                        ]
+	 *
+	 * @return $this[] array of records found
 	 * @see find
-	 * @return array array of records found
 	 */
 	public static function all(/* ... */)
 	{
@@ -1443,8 +1459,21 @@ class Model
 	 * YourModel::count(array('conditions' => 'amount > 3.14159265'));
 	 * </code>
 	 *
-	 * @see find
+	 * @param array $options = [
+	 *                        'select' => string,
+	 *                        'conditions' => [],
+	 *                        'joins' => [],
+	 *                        'order' => string,
+	 *                        'limit' => int,
+	 *                        'offset' => int,
+	 *                        'group' => string,
+	 *                        'having' => string,
+	 *                        'readonly' => string,
+	 *                        'include' => [],
+	 *                        ]
+	 *
 	 * @return int Number of records that matched the query
+	 * @see find
 	 */
 	public static function count(/* ... */)
 	{
@@ -1486,8 +1515,21 @@ class Model
 	/**
 	 * Alias for self::find('first').
 	 *
+	 * @param array $options = [
+	 *                        'select' => string,
+	 *                        'conditions' => [],
+	 *                        'joins' => [],
+	 *                        'order' => string,
+	 *                        'limit' => int,
+	 *                        'offset' => int,
+	 *                        'group' => string,
+	 *                        'having' => string,
+	 *                        'readonly' => string,
+	 *                        'include' => [],
+	 *                        ]
+	 *
+	 * @return null | $this The first matched record or null if not found
 	 * @see find
-	 * @return Model The first matched record or null if not found
 	 */
 	public static function first(/* ... */)
 	{
@@ -1497,8 +1539,21 @@ class Model
 	/**
 	 * Alias for self::find('last')
 	 *
+	 * @param array $options  = [
+	 *                        'select' => string,
+	 *                        'conditions' => [],
+	 *                        'joins' => [],
+	 *                        'order' => string,
+	 *                        'limit' => int,
+	 *                        'offset' => int,
+	 *                        'group' => string,
+	 *                        'having' => string,
+	 *                        'readonly' => string,
+	 *                        'include' => [],
+	 *                        ]
+	 *
+	 * @return null | $this The last matched record or null if not found
 	 * @see find
-	 * @return Model The last matched record or null if not found
 	 */
 	public static function last(/* ... */)
 	{
@@ -1553,11 +1608,25 @@ class Model
 	 * <li><b>group:</b> A SQL group by fragment</li>
 	 * </ul>
 	 *
-	 * @throws {@link RecordNotFound} if no options are passed or finding by pk and no records matched
-	 * @return mixed An array of records found if doing a find_all otherwise a
+	 * @param string $type
+	 * @param array $options = [
+	 *                 'select' => string,
+	 *                 'conditions' => [],
+	 *                 'joins' => [],
+	 *                 'order' => string,
+	 *                 'limit' => int,
+	 *                 'offset' => int,
+	 *                 'group' => string,
+	 *                 'having' => string,
+	 *                 'readonly' => string,
+	 *                 'include' => [],
+	 *                 ]
+	 *
+	 * @return null | $this | $this[] An array of records found if doing a find_all otherwise a
 	 *   single Model object or null if it wasn't found. NULL is only return when
 	 *   doing a first/last find. If doing an all find and no records matched this
 	 *   will return an empty array.
+	 * @throws {@link RecordNotFound} if no options are passed or finding by pk and no records matched
 	 */
 	public static function find(/* $type, $options */)
 	{
@@ -1644,7 +1713,7 @@ class Model
 	 * @see find
 	 * @param array $values An array containing values for the pk
 	 * @param array $options An options array
-	 * @return Model
+	 * @return null | $this
 	 * @throws {@link RecordNotFound} if a record could not be found
 	 */
 	public static function find_by_pk($values, $options)
